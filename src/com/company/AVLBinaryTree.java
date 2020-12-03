@@ -3,8 +3,9 @@ package com.company;
 public class AVLBinaryTree<T> implements IIntelligentSIDC<T>
 {
     private Node<T> root;
-    ArrayList<Integer> keys;
+    ArrayList<Integer> keys = new ArrayList<>();
     boolean needsToBeUpdated = true; //for sorted key list
+    private int count = 0;
 
     public boolean insert(int key, T data)
     {
@@ -177,15 +178,23 @@ public class AVLBinaryTree<T> implements IIntelligentSIDC<T>
 
         return z;
     }
-
-    public void InOrderTraversal(Node<T> node, int count)
+    private void resetKeys()
     {
-        if(node != null)
-        {
-            InOrderTraversal(node.getLeft(), count);
-            keys.insert(node.key, count++);
-            InOrderTraversal(node.getLeft(), count);
+        count = 0;
+        keys = new ArrayList<Integer>();
+        InOrderTraversal(root);
+    }
+
+    public void InOrderTraversal(Node<T> node)
+    {
+        if(node == null){
+            return;
         }
+
+        InOrderTraversal(node.getLeft());
+        keys.insert(node.key, count++);
+        InOrderTraversal(node.getRight());
+
         needsToBeUpdated = false;
     }
 
@@ -194,7 +203,7 @@ public class AVLBinaryTree<T> implements IIntelligentSIDC<T>
     {
         if(needsToBeUpdated)
         {
-            InOrderTraversal(root, 0);
+            resetKeys();
         }
 
         return keys;
@@ -224,7 +233,7 @@ public class AVLBinaryTree<T> implements IIntelligentSIDC<T>
     {
         if(needsToBeUpdated)
         {
-            InOrderTraversal(root, 0);
+            resetKeys();
         }
 
         int index = keys.find((int) key);
@@ -246,7 +255,7 @@ public class AVLBinaryTree<T> implements IIntelligentSIDC<T>
     {
         if(needsToBeUpdated)
         {
-            InOrderTraversal(root, 0);
+            resetKeys();
         }
 
         int index = keys.find((int) key);
@@ -265,7 +274,7 @@ public class AVLBinaryTree<T> implements IIntelligentSIDC<T>
     {
         if(needsToBeUpdated)
         {
-            InOrderTraversal(root, 0);
+            resetKeys();
         }
 
         int index1 = keys.find((int) key1);
@@ -289,6 +298,6 @@ public class AVLBinaryTree<T> implements IIntelligentSIDC<T>
     @Override
     public boolean keyExists(long key)
     {
-        return (find((int) key) == null);
+        return keys.find((int) key) > -1;
     }
 }

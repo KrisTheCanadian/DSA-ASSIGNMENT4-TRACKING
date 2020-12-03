@@ -4,14 +4,17 @@ public class ArrayList<T>
 {
     private Object[] array;
     private int size;
+    private int count;
 
     public ArrayList(int size)
     {
         array = new Object[size];
     }
 
-    public ArrayList() {
+    public ArrayList()
+    {
         size = 100;
+        array = new Object[size];
     }
 
     public int find(T element) //returns index
@@ -22,13 +25,18 @@ public class ArrayList<T>
             {
                 return i;
             }
+            if(array[i] == null)
+            {
+                return -1;
+            }
         }
         return -1;
     }
 
     public void insert(T element, int index)
     {
-        if(array.length <= size)
+        count++;
+        if(count > size)
         {
             growSize();
         }
@@ -64,6 +72,7 @@ public class ArrayList<T>
             return false;
         }
         array[index] = null;
+        count--;
         return true;
     }
 
@@ -73,7 +82,10 @@ public class ArrayList<T>
         size *= 2;
         Object[] newArray = new Object[size];
 
-        if (oldmaxsize >= 0) System.arraycopy(array, 0, newArray, 0, oldmaxsize);
+        for(int i = 0; i < oldmaxsize; i++)
+        {
+            newArray[i] = array[i];
+        }
 
         array = newArray;
     }

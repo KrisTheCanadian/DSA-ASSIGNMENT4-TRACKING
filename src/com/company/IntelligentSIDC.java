@@ -5,7 +5,6 @@ import java.util.Random;
 
 public class IntelligentSIDC
 {
-    int size;
 
     IIntelligentSIDC<Student> dataStructure;
 
