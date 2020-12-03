@@ -10,6 +10,22 @@ public class ArrayList<T>
         array = new Object[size];
     }
 
+    public ArrayList() {
+        size = 100;
+    }
+
+    public int find(T element) //returns index
+    {
+        for(int i = 0; i < size; i++)
+        {
+            if(element == array[i])
+            {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public void insert(T element, int index)
     {
         if(array.length <= size)
@@ -25,6 +41,12 @@ public class ArrayList<T>
     {
         return (T) array[index];
     }
+
+    public int size()
+    {
+        return size;
+    }
+
 
     public boolean remove(int index)
     {

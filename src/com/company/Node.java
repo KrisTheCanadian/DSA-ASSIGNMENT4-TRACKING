@@ -2,23 +2,27 @@ package com.company;
 
 public class Node<T>
 {
-    private Node previous;
-    private Node next;
+    private Node<T> left;
+    private Node<T> right;
     private T data;
+    int key;
 
-    Node(T data)
+    int height;
+
+    Node(int key, T data)
     {
         this.data = data;
+        this.key = key;
     }
 
-    void setNext(Node<T> next)
+    void setRight(Node<T> right)
     {
-        this.next = next;
+        this.right = right;
     }
 
-    void setPrevious(Node<T> previous)
+    void setLeft(Node<T> left)
     {
-        this.previous = previous;
+        this.left = left;
     }
 
     void setData(T data)
@@ -26,14 +30,14 @@ public class Node<T>
         this.data = data;
     }
 
-    Node<T> getNext()
+    Node<T> getRight()
     {
-        return next;
+        return right;
     }
 
-    Node<T> getPrevious()
+    Node<T> getLeft()
     {
-        return previous;
+        return left;
     }
 
     T getData()

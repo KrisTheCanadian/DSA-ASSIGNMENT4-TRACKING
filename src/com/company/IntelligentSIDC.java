@@ -1,51 +1,80 @@
 package com.company;
 
+
+import java.util.Random;
+
 public class IntelligentSIDC
 {
+    int size;
+
+    IIntelligentSIDC<Student> dataStructure;
+
+    IntelligentSIDC(int size)
+    {
+        SetSIDCThreshold(size);
+    }
 
     void SetSIDCThreshold(int size)
     {
-
+        if(size > 1000)
+        {
+            dataStructure = new AVLBinaryTree<>();
+        }
+        else
+        {
+            dataStructure = new Sequence<>();
+        }
     }
 
-    long generate()
+    private int generate()
     {
-        return 0;
-    }
+        Random rand = new Random();
+        int key;
+        do {
+            key = rand.nextInt(100000000); //will produce 8 digit number since from 0 - 99,999,999
 
-    int[] allKeys()
-    {
-        return null;
-    }
 
-    long add(long key, String value)
-    {
+        }while(dataStructure.keyExists(key));
+
         return key;
     }
 
-    boolean remove(long key)
+    public ArrayList<Integer> allKeys()
     {
-        return false;
+        return dataStructure.allKeys();
     }
 
-    String getValues(long key)
+    public long add(String value)
     {
-        return null;
-    }
-
-    long nextKey(long key)
-    {
+        int key = generate();
+        Student student = new Student(value, key);
+        dataStructure.add(key, student);
         return key;
     }
 
-    long prevKey(long key)
+    public boolean remove(long key)
     {
-        return key;
+        return dataStructure.remove(key);
     }
 
-    long rangeKey(long key1, long key2)
+    public Student getValues(long key)
     {
-        return key1;
+        return dataStructure.getValues(key);
+    }
+
+    public long nextKey(long key)
+    {
+        return dataStructure.nextKey(key);
+    }
+
+    public long prevKey(long key)
+    {
+        return dataStructure.prevKey(key);
+    }
+
+    public long rangeKey(long key1, long key2)
+    {
+        return dataStructure.rangeKey(key1, key2);
     }
 
 }
