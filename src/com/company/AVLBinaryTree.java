@@ -108,32 +108,32 @@ public class AVLBinaryTree<T> implements IIntelligentSIDC<T>
         return n == null ? -1 : n.height;
     }
 
-    private Node<T> rotateRight(Node<T> y)
+    private Node<T> rotateRight(Node<T> a)
     {
-        Node<T> x = y.getLeft();
-        Node<T> z = x.getRight();
+        Node<T> b = a.getLeft();
+        Node<T> c = b.getRight();
 
-        x.setRight(y);
-        y.setLeft(z);
+        b.setRight(a);
+        a.setLeft(c);
 
-        updateHeight(y);
-        updateHeight(x);
+        updateHeight(a);
+        updateHeight(b);
 
-        return x;
+        return b;
     }
 
-    private Node<T> rotateLeft(Node<T> y)
+    private Node<T> rotateLeft(Node<T> a)
     {
-        Node<T> x = y.getRight();
-        Node<T> z = x.getLeft();
+        Node<T> b = a.getRight();
+        Node<T> c = b.getLeft();
 
-        x.setLeft(y);
-        y.setRight(z);
+        b.setLeft(a);
+        a.setRight(c);
 
-        updateHeight(y);
-        updateHeight(x);
+        updateHeight(a);
+        updateHeight(b);
 
-        return x;
+        return b;
     }
 
     private Node<T> mostLeftChild(Node<T> node)
@@ -147,41 +147,45 @@ public class AVLBinaryTree<T> implements IIntelligentSIDC<T>
         return current;
     }
 
-    private Node<T> balance(Node<T> z)
+    private Node<T> balance(Node<T> node)
     {
-        updateHeight(z);
-        int balance = getBalanceFactor(z);
+        updateHeight(node);
+        int balance = getBalanceFactor(node);
         if (balance > 1)
         {
-            if (getHeight(z.getRight().getRight()) > getHeight(z.getRight().getLeft()))
+            if (getHeight(node.getRight().getRight()) > getHeight(node.getRight().getLeft()))
             {
-                z = rotateLeft(z);
+                node = rotateLeft(node);
             }
             else
             {
-                z.setRight(rotateRight(z.getRight()));
-                z = rotateLeft(z);
+                node.setRight(rotateRight(node.getRight()));
+                node = rotateLeft(node);
             }
         }
         else if (balance < -1)
         {
-            if (getHeight(z.getLeft().getLeft()) > getHeight(z.getLeft().getRight()))
+            if (getHeight(node.getLeft().getLeft()) > getHeight(node.getLeft().getRight()))
             {
-                z = rotateRight(z);
+                node = rotateRight(node);
             }
             else
             {
-                z.setLeft(rotateLeft(z.getLeft()));
-                z = rotateRight(z);
+                node.setLeft(rotateLeft(node.getLeft()));
+                node = rotateRight(node);
             }
         }
 
-        return z;
+        return node;
     }
     private void resetKeys()
     {
+        if(keys.size() <= 0)
+        {
+            keys = new ArrayList<>();
+        }
+        keys = new ArrayList<>(keys.size());
         count = 0;
-        keys = new ArrayList<Integer>();
         InOrderTraversal(root);
     }
 
@@ -235,19 +239,8 @@ public class AVLBinaryTree<T> implements IIntelligentSIDC<T>
         {
             resetKeys();
         }
-
-        int index = keys.find((int) key);
-
-        if(index > -1)
-        {
-            index++;
-            if(index < keys.size())
-            {
-                return keys.get(index);
-            }
-        }
-
-        return -1;
+        int index = keys.next((int) key);
+        return keys.get(index);
     }
 
     @Override
@@ -257,16 +250,8 @@ public class AVLBinaryTree<T> implements IIntelligentSIDC<T>
         {
             resetKeys();
         }
-
-        int index = keys.find((int) key);
-
-        index--;
-        if(index < keys.size() && index > -1)
-        {
-            return keys.get(index);
-        }
-
-        return -1;
+        int index = keys.prev((int) key);
+        return keys.get(index);
     }
 
     @Override
@@ -284,11 +269,11 @@ public class AVLBinaryTree<T> implements IIntelligentSIDC<T>
         {
             if(index1 > index2)
             {
-                return index2 - index1;
+                return index1 - index2;
             }
             else
             {
-                return index1 - index2;
+                return index2 - index1;
             }
         }
 

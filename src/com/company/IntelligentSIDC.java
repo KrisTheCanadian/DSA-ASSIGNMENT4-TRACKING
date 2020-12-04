@@ -1,7 +1,10 @@
 package com.company;
 
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Random;
+import java.util.Scanner;
 
 public class IntelligentSIDC
 {
@@ -51,18 +54,50 @@ public class IntelligentSIDC
         return key;
     }
 
+    public void benchmarkAddFromFile(String name)
+    {
+        try {
+            File myObj = new File(name);
+            Scanner myReader = new Scanner(myObj);
+            while (myReader.hasNextLine())
+            {
+                int data = myReader.nextInt();
+                System.out.println(data);
+                benchmarkAdd(data);
+            }
+            myReader.close();
+        } catch (FileNotFoundException e)
+        {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+    }
+
+    private void benchmarkAdd(int key)
+    {
+        if(!dataStructure.keyExists(key))
+        {
+            Student student = new Student("Info", key);
+            dataStructure.add(key, student);
+            return;
+        }
+
+        System.out.println("Key: " + key + " Already Exists, Skipping.");
+    }
+
     public boolean remove(long key)
     {
         return dataStructure.remove(key);
     }
 
-    public Student getValues(long key)
+    public String getValues(long key)
     {
-        return dataStructure.getValues(key);
+        return dataStructure.getValues(key).info;
     }
 
     public long nextKey(long key)
     {
+
         return dataStructure.nextKey(key);
     }
 

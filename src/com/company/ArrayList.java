@@ -8,6 +8,7 @@ public class ArrayList<T>
 
     public ArrayList(int size)
     {
+        this.size = size;
         array = new Object[size];
     }
 
@@ -17,11 +18,16 @@ public class ArrayList<T>
         array = new Object[size];
     }
 
+    public Object[] getArray()
+    {
+        return array;
+    }
+
     public int find(T element) //returns index
     {
         for(int i = 0; i < size; i++)
         {
-            if(element == array[i])
+            if(element.equals(array[i]))
             {
                 return i;
             }
@@ -55,6 +61,15 @@ public class ArrayList<T>
         return size;
     }
 
+    public int next(T key)
+    {
+        return find(key) + 1;
+    }
+
+    public int prev(T key)
+    {
+        return find(key) - 1;
+    }
 
     public boolean remove(int index)
     {
