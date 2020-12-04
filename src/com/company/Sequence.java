@@ -31,7 +31,7 @@ public class Sequence<T> implements IIntelligentSIDC<T>
             hashNode = hashTable.get(probing = (probing + 1) % primeSize);
         }
         hashTable.insert(newNode, probing);
-        return probing;
+        return hashkey;
     }
 
     private void resetKeys()
