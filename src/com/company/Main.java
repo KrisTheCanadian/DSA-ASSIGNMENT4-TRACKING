@@ -113,7 +113,18 @@ public class Main {
     public static void testLarge3ADT()
     {
 
-        IntelligentSIDC intelligentSIDC = new IntelligentSIDC(1000000);
+        int size = 1000000;
+
+        IntelligentSIDC intelligentSIDC = new IntelligentSIDC(size);
+
+
+        String name = "TestName ";
+        long[] keys = new long[size];
+
+        for(int i = 0; i < size; i++)
+        {
+            keys[i] = intelligentSIDC.add(name + i);
+        }
 
         ArrayList<Integer> sortedKeys = intelligentSIDC.allKeys();
 
