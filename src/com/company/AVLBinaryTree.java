@@ -283,6 +283,6 @@ public class AVLBinaryTree<T> implements IIntelligentSIDC<T>
     @Override
     public boolean keyExists(long key)
     {
-        return keys.find((int) key) > -1;
+        return find((int) key) != null;
     }
 }

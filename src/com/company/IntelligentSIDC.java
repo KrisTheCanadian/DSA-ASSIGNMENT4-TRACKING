@@ -62,7 +62,7 @@ public class IntelligentSIDC
             while (myReader.hasNextLine())
             {
                 int data = myReader.nextInt();
-                System.out.println(data);
+
                 benchmarkAdd(data);
             }
             myReader.close();
@@ -79,10 +79,12 @@ public class IntelligentSIDC
         {
             Student student = new Student("Info", key);
             dataStructure.add(key, student);
-            return;
+            System.out.println("Key: " + key + " has been entered.");
         }
-
-        System.out.println("Key: " + key + " Already Exists, Skipping.");
+        else
+       {
+                System.out.println("Key: " + key + " Already Exists, Skipping.");
+       }
     }
 
     public boolean remove(long key)

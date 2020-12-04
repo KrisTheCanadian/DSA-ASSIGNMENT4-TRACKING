@@ -6,7 +6,7 @@ public class Main {
     {
         // ADT
 
-        //benchmark1();
+        benchmark1();
         //benchmark2();
         //benchmark3();
 
